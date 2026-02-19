@@ -1,107 +1,44 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Cálculo de Galones Consumidos</title>
-  <style>
-    body { font-family: Arial, sans-serif; margin: 24px; max-width: 720px; }
-    .card { border: 1px solid #ddd; border-radius: 10px; padding: 16px; margin-top: 14px; }
-    label { display: block; margin: 10px 0 6px; }
-    input { width: 100%; padding: 10px; font-size: 16px; }
-    button { padding: 10px 14px; font-size: 15px; margin: 8px 8px 0 0; cursor: pointer; }
-    .muted { color: #666; font-size: 14px; }
-    .result { font-weight: bold; }
-  </style>
+  <meta charset="UTF-8">
+  <title>Control de Consumo de Gasolina</title>
+
+  <!-- Enlace al archivo CSS -->
+  <link rel="stylesheet" href="estilo.css">
 </head>
 <body>
 
-  <h1>Control de consumo de gasolina</h1>
-  <p class="muted">
-    Fórmula: (Km después de llenar - Km al momento de llenar) / 24.5
-  </p>
+  <h2>Control de consumo de gasolina</h2>
 
   <div class="card">
-    <!-- 1. Párrafo que muestre los km al momento de llenar -->
-    <p id="pKmLlenado" class="result">Kilómetros al momento de llenar el tanque: --</p>
 
-    <!-- 2. Entrada de texto para km después de llenar -->
-    <label for="txtKmDespues">Kilómetros recorridos después de haber llenado el tanque:</label>
-    <input id="txtKmDespues" type="number" step="0.01" placeholder="Ej: 1520" />
+    <p id="pKmLlenado" class="result">
+      Kilómetros al momento de llenar el tanque: --
+    </p>
 
-    <!-- 3. Botón para pasar el valor al párrafo (km al momento de llenar) -->
-    <button id="btnGuardarKmLlenado" type="button">Guardar km al llenar</button>
+    <label for="txtKmDespues">
+      Kilómetros recorridos después de haber llenado el tanque:
+    </label>
+    <input id="txtKmDespues" type="number" step="0.01">
 
-    <!-- 4. Botón para calcular galones consumidos -->
-    <button id="btnCalcular" type="button">Calcular galones consumidos</button>
+    <button id="btnGuardar">Guardar km al llenar</button>
+    <button id="btnCalcular">Calcular galones</button>
+    <button id="btnLimpiar">Limpiar</button>
 
-    <!-- 5. Botón para limpiar -->
-    <button id="btnLimpiar" type="button">Limpiar</button>
+    <p id="pGalones" class="result">
+      Galones consumidos: --
+    </p>
 
-    <hr style="margin:16px 0;">
 
-    <!-- Párrafo resultado de galones consumidos -->
-    <p id="pGalones" class="result">Galones consumidos: --</p>
+
+    <!-- Canvas -->
+    <canvas id="cvTanque" width="200" height="340"></canvas>
+
   </div>
 
-  <script>
-    // Referencias a elementos
-    const pKmLlenado = document.getElementById("pKmLlenado");
-    const txtKmDespues = document.getElementById("txtKmDespues");
-    const pGalones = document.getElementById("pGalones");
-
-    const btnGuardarKmLlenado = document.getElementById("btnGuardarKmLlenado");
-    const btnCalcular = document.getElementById("btnCalcular");
-    const btnLimpiar = document.getElementById("btnLimpiar");
-
-    // Variable para guardar el valor "km al momento de llenar"
-    let kmAlLlenar = null;
-
-    // 3) Pasar el valor del input al párrafo de km al llenar
-    btnGuardarKmLlenado.addEventListener("click", () => {
-      const valor = parseFloat(txtKmDespues.value);
-
-      if (isNaN(valor) || valor < 0) {
-        alert("Por favor ingresa un número válido de kilómetros (mayor o igual a 0).");
-        return;
-      }
-
-      kmAlLlenar = valor;
-      pKmLlenado.textContent = `Kilómetros al momento de llenar el tanque: ${kmAlLlenar.toFixed(0)} km`;
-      pGalones.textContent = "Galones consumidos: --";
-    });
-
-    // 4) Calcular galones consumidos
-    btnCalcular.addEventListener("click", () => {
-      const kmDespues = parseFloat(txtKmDespues.value);
-
-      if (kmAlLlenar === null) {
-        alert("Primero guarda los kilómetros al momento de llenar (botón: 'Guardar km al llenar').");
-        return;
-      }
-
-      if (isNaN(kmDespues) || kmDespues < 0) {
-        alert("Por favor ingresa un número válido de kilómetros (mayor o igual a 0).");
-        return;
-      }
-
-      if (kmDespues < kmAlLlenar) {
-        alert("El valor de 'km después' no puede ser menor que 'km al llenar'.");
-        return;
-      }
-
-      const galones = (kmDespues - kmAlLlenar) / 24.5;
-      pGalones.textContent = `Galones consumidos: ${galones.toFixed(1)} gal`;
-    });
-
-    // 5) Limpiar datos
-    btnLimpiar.addEventListener("click", () => {
-      kmAlLlenar = null;
-      txtKmDespues.value = "";
-      pKmLlenado.textContent = "Kilómetros al momento de llenar el tanque: --";
-      pGalones.textContent = "Galones consumidos: --";
-    });
-  </script>
+  <!-- Enlace al archivo JavaScript -->
+  <script src="script.js"></script>
 
 </body>
 </html>
