@@ -59,7 +59,7 @@ btnGuardar.addEventListener("click", () => {
 
   kmAlLlenar = valor;
   pKmLlenado.textContent =
-    `Kilómetros al momento de llenar el tanque: ${valor.toFixed(2)} km`;
+    `Kilómetros al momento de llenar el tanque: ${valor.toFixed(0)} km`;
   pGalones.textContent = "Galones consumidos: --";
   dibujarTanque(null);
 });
@@ -77,9 +77,9 @@ btnCalcular.addEventListener("click", () => {
     return;
   }
 
-  const galones = (km - kmAlLlenar) / 24.5;
+  const galones = (km - kmAlLlenar) / 28.5;
   pGalones.textContent =
-    `Galones consumidos: ${galones.toFixed(3)} gal`;
+    `Galones consumidos: ${galones.toFixed(1)} gal`;
 
   dibujarTanque(galones);
 });
